@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FoodGuru</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/stylesheets/main.css">
+    </head>
+    <body>
+       <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">FoodGuru</a>
+            </div>
+            <% if(!currentUser){ %>
+            
+              <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link active" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/register">Sign Up</a>
+                </li>
+                </ul>
+                <% } else { %>
+                
+                <ul class="nav justify-content-end">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#">Signed In As <%= currentUser.username %></a></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a>
+              </li>
+               <ul class="nav justify-content-end">
+              <% } %>
+            </ul>
+        </div>
+    </nav>
+    
