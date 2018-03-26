@@ -60,18 +60,16 @@ router.get("/:id", function(req,res){
 });
 
 // EDIT route
-router.get("/:id/edit", function(req,res){
+router.get("/:id/edit", verifyRestaurantOwnership, function(req,res){
+    
+    // Check if user is logged in
     Restaurant.findById(req.params.id, function(err, foundRestaurant){
-        if(err){
-            res.redirect("/restaurants");
-        } else {
-            res.render("restaurants/edit", {restaurant: foundRestaurant});
-        }
+        res.render("restaurants/edit", {restaurant: foundRestaurant});
     });
 });
 
 // UPDATE route
-router.put("/:id", function(req,res){
+router.put("/:id", verifyRestaurantOwnership, function(req,res){
    // Find and update restaurant
    Restaurant.findByIdAndUpdate(req.params.id, req.body.restaurant, function(err, updatedRestaurant){
        if(err){
@@ -84,7 +82,7 @@ router.put("/:id", function(req,res){
 });
 
 // DESTROY route
-router.delete("/:id", function(req,res){
+router.delete("/:id", verifyRestaurantOwnership, function(req,res){
     Restaurant.findByIdAndRemove(req.params.id, function(err){
         if(err){
             res.redirect("/restaurants");
@@ -102,4 +100,24 @@ function isLoggedIn(req, res, next){
     res.redirect("/login");
 }
 
+// Middleware - verify restaurant ownership
+function verifyRestaurantOwnership(req, res, next) {
+     if (req.isAuthenticated()){
+         Restaurant.findById(req.params.id, function(err, foundRestaurant){
+            if(err){
+                res.redirect("/restaurants");
+            } else {
+                 // Then, check if user is authorized to edit the restaurant
+                 if (foundRestaurant.author.id.equals(req.user._id)) {
+                      next();
+                 } else {
+                     //  Otherwise, redirect user
+                     res.redirect("back");
+                 }
+            }
+        });
+     } else {
+        res.redirect("back");
+    }
+}
 module.exports = router;
