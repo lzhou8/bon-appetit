@@ -42,7 +42,7 @@ app.use("/restaurants/:id/comments", commentRoutes);
 app.use("/restaurants", restaurantRoutes);
 
 app.listen(process.env.PORT, process.env.IP, function(){
-    console.log("FoodGuru has started..");
+    console.log("App has started..");
 });
 
 

@@ -83,6 +83,17 @@ router.put("/:id", function(req,res){
    // Redirect somewhere
 });
 
+// DESTROY route
+router.delete("/:id", function(req,res){
+    Restaurant.findByIdAndRemove(req.params.id, function(err){
+        if(err){
+            res.redirect("/restaurants");
+        } else {
+            res.redirect("/restaurants");
+        }
+    })
+});
+
 // Middleware - check if user is logged in
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
