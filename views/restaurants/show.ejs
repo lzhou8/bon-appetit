@@ -22,9 +22,9 @@
                         <%=foundRestaurant.author.username%>
                     </p>
                     <% if (currentUser && foundRestaurant.author.id.equals(currentUser._id)) { %>
-                        <a href="/restaurants/<%=foundRestaurant._id%>/edit">Edit</a>
+                        <a class="btn btn-xs btn-warning" href="/restaurants/<%=foundRestaurant._id%>/edit">Edit</a>
                         <form id="delete-form" action="/restaurants/<%=foundRestaurant._id%>?_method=DELETE" method="POST">
-                            <button>Delete</button>
+                             <input type="submit" class="btn btn-xs btn-danger" value="Delete">
                         </form>
                     <% } %>
                 </div>
@@ -40,7 +40,6 @@
                         <div class="col-md-12">
                             <p>
                                 <strong><%= comment.author.username %>:</strong> <%= comment.text %>
-                                <div class="text-right">10 days ago</div>
                             </p>
                              <% if (currentUser && comment.author.id.equals(currentUser._id)) { %>
                                 <a class="btn btn-xs btn-warning" href="/restaurants/<%=foundRestaurant._id%>/comments/<%=comment._id%>/edit">Edit</a>
